@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="TodoApp">
+
+<head>
+    <title>Todo App</title>
+    <script src="angular.js"></script>
+    <script src="app.js"></script>
+    <style>
+    .strike {
+        text-decoration: line-through;
+    }
+    </style>
+</head>
+
+<body>
+    <div ng-controller="HeaderCtrl">
+        <h1>Todo App ({{todos.length}})</h1>
+    </div>
+    <div ng-controller="AppCtrl">
+        <input type="text" ng-model="todoText" placeholder="Enter a Todo To Do" ng-keypress="createTodo($event)">
+        <div ng-repeat="todo in todos">
+            {{todo}}
+            <div ng-hide="todo.isEditMode">
+                <input type="checkbox" ng-model="todo.isCompleted" ng-change="saveTodo(todo)">
+                <label ng-class="{strike: todo.isCompleted}">{{todo.text}}</label>
+                <input type="button" value="Edit" ng-click="editTodo(todo)" ng-disabled="todo.isCompleted">
+                <input type="button" value="Delete" ng-click="deleteTodo($index, todo)">
+            </div>
+            <div ng-hide="!todo.isEditMode">
+                <input type="text" ng-model="todo.text">
+                <input type="button" value="Save" ng-click="saveTodo(todo)">
+                <input type="button" value="Cancel" ng-click="cancelTodo(todo)">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
